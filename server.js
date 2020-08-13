@@ -18,6 +18,25 @@ app.get('/info',function(req,res){
     res.sendfile("README.md");
 })
 
+
+const nome='happy ending';
+app.get('/beer/happyending',function(req,res){
+    request({
+        url:'https://sandbox-api.brewerydb.com/v2/beers?name='+nome+'&key=7852692d8bed34f98a272f59ffd375a8', //+process.env.BREW_KEY,
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            res.send(info);
+            //res.send(info.data.style.description);
+            //res.send(response.statusCode+" "+body)
+            console.log(response.statusCode +" OK");
+        }
+    });
+});
+
 app.get('/beer',function(req,res){
     request({
         url:'https://sandbox-api.brewerydb.com/v2/beer/random/?key=7852692d8bed34f98a272f59ffd375a8', //+process.env.BREW_KEY,
