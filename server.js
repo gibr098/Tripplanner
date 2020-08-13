@@ -30,7 +30,7 @@ app.get('/beer',function(req,res){
             res.send(info);
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
-            //console.log(response.statusCode, body);
+            console.log(response.statusCode);
         }
     });
 });
