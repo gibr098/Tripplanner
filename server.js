@@ -54,6 +54,24 @@ app.get('/beer',function(req,res){
     });
 });
 
+//const citta='rome';
+app.get('/city_id/:citta',function(req,res){
+    request({
+        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&input='+req.params.citta+'&inputtype=textquery', //+process.env.BREW_KEY,
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            res.send(info);
+            //res.send(info.data.style.description);
+            //res.send(response.statusCode+" "+body)
+            console.log(response.statusCode +" OK");
+        }
+    });
+});
+
 app.listen(PORT,function(){
     console.log("Server in ascolto sulla porta: %s",PORT);
 });
