@@ -57,7 +57,7 @@ app.get('/beer',function(req,res){
 //const citta='rome';
 app.get('/city_id/:citta',function(req,res){
     request({
-        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&input='+req.params.citta+'&inputtype=textquery', //+process.env.BREW_KEY,
+        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&input='+req.params.citta+'&inputtype=textquery', //+process.env.GOOGLE_KEY,
         method: 'GET',
     },function(error, response, body){
         if(error) {
