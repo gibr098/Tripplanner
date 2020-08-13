@@ -1,0 +1,22 @@
+{
+  "name": "progetto-reti-di-calcolatori",
+  "version": "1.0.0",
+  "description": "CIAOOOOOO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori/issues"
+  },
+  "homepage": "https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0"
+  }
+}
