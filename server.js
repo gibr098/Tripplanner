@@ -15,7 +15,7 @@ app.get('/',function(req,res){
 })
 
 app.get('/info',function(req,res){
-    res.send("info");
+    res.sendfile("README.md");
 })
 
 app.get('/beer',function(req,res){
