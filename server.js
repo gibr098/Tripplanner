@@ -69,7 +69,6 @@ var id;app.get('/city_id/:citta',function(req,res){
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
             console.log(response.statusCode +" OK");
-     
    }
     });
 });
@@ -77,6 +76,24 @@ var id;app.get('/city_id/:citta',function(req,res){
 app.get('/attrazioni/:citta',function(req,res){
     request({
         url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=attrazioni+a+'+req.params.citta+'&language=it',
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            res.send(info);
+            //res.send(info.data.style.description);
+            //res.send(response.statusCode+" "+body)
+            console.log(response.statusCode +" OK");
+   }
+    });
+});
+
+
+app.get('/ristoranti/',function(req,res){
+    request({
+        url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=ristoranti+a+'+req.query.citta+'&language=it',
         method: 'GET',
     },function(error, response, body){
         if(error) {
