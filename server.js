@@ -82,7 +82,13 @@ app.get('/attrazioni/:citta',function(req,res){
             console.log(error);
         } else {
             var info=JSON.parse(body);
-            res.send(info);
+            var attrazioni='<h1>Attrazioni:</h1><br>';
+            for(var i=0; i<info.results.length; i++){
+                attrazioni+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
+            }
+            res.send(attrazioni);
+            //res.send(info);
+
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
             console.log(response.statusCode +" OK");
@@ -100,7 +106,13 @@ app.get('/ristoranti/',function(req,res){
             console.log(error);
         } else {
             var info=JSON.parse(body);
-            res.send(info);
+            var ristoranti='<h1>Ristoranti:</h1><br>';
+            for(var i=0; i<info.results.length; i++){
+                ristoranti+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
+            }
+            res.send(ristoranti);
+            //res.send(info);
+
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
             console.log(response.statusCode +" OK");
