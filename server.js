@@ -6,6 +6,8 @@ const app=express();
 
 var request = require('request');
 
+const dotenv = require("dotenv").config();
+
 var bodyParser = require("body-parser");
 
 const PORT=5000;
@@ -22,7 +24,7 @@ app.get('/info',function(req,res){
 const nome='happy ending';
 app.get('/beer/happyending',function(req,res){
     request({
-        url:'https://sandbox-api.brewerydb.com/v2/beers?name='+nome+'&key=7852692d8bed34f98a272f59ffd375a8', //+process.env.BREW_KEY,
+        url:'https://sandbox-api.brewerydb.com/v2/beers?name='+nome+'&key='+process.env.BREW_KEY,
         method: 'GET',
     },function(error, response, body){
         if(error) {
@@ -39,7 +41,7 @@ app.get('/beer/happyending',function(req,res){
 
 app.get('/beer',function(req,res){
     request({
-        url:'https://sandbox-api.brewerydb.com/v2/beer/random/?key=7852692d8bed34f98a272f59ffd375a8', //+process.env.BREW_KEY,
+        url:'https://sandbox-api.brewerydb.com/v2/beer/random/?key='+ process.env.BREW_KEY,
         method: 'GET',
     },function(error, response, body){
         if(error) {
@@ -54,10 +56,27 @@ app.get('/beer',function(req,res){
     });
 });
 
-//const citta='rome';
-app.get('/city_id/:citta',function(req,res){
+var id;app.get('/city_id/:citta',function(req,res){
     request({
-        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&input='+req.params.citta+'&inputtype=textquery', //+process.env.GOOGLE_KEY,
+        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key='+process.env.GOOGLE_KEY +'&input='+req.params.citta+'&inputtype=textquery',
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            res.send(info.candidates);
+            //res.send(info.data.style.description);
+            //res.send(response.statusCode+" "+body)
+            console.log(response.statusCode +" OK");
+     
+   }
+    });
+});
+
+app.get('/attrazioni/:citta',function(req,res){
+    request({
+        url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=attrazioni+a+'+req.params.citta+'&language=it',
         method: 'GET',
     },function(error, response, body){
         if(error) {
@@ -68,9 +87,11 @@ app.get('/city_id/:citta',function(req,res){
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
             console.log(response.statusCode +" OK");
-        }
+   }
     });
 });
+
+
 
 app.listen(PORT,function(){
     console.log("Server in ascolto sulla porta: %s",PORT);
