@@ -10,7 +10,12 @@ const dotenv = require("dotenv").config();
 
 var bodyParser = require("body-parser");
 
+var fs=require('fs');
+
+
 const PORT=5000;
+
+
 
 app.get('/',function(req,res){
     res.send("Benvenuto");
@@ -111,6 +116,33 @@ app.get('/ristoranti/',function(req,res){
                 ristoranti+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
             }
             res.send(ristoranti);
+            //res.send(info);
+
+            //res.send(info.data.style.description);
+            //res.send(response.statusCode+" "+body)
+            console.log(response.statusCode +" OK");
+   }
+    });
+});
+
+
+app.get('/pizzerie/:citta',function(req,res){
+    request({
+        url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=pizzerie+a+'+req.params.citta+'&language=it',
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            var pizzerie='<h1>Pizzerie:</h1><br>';
+            for(var i=0; i<info.results.length; i++){
+                pizzerie+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
+            }
+            var emma1 = {lat: info.results[0].geometry.location.lat, lng: info.results[0].geometry.location.lng};
+
+            res.send(pizzerie);
+            
             //res.send(info);
 
             //res.send(info.data.style.description);
