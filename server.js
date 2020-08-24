@@ -1,4 +1,3 @@
-//Server prova con express che si connette a un servizio che offre informazini sulle birre 
 
 const express=require('express');
 const app=express();
@@ -12,6 +11,7 @@ var bodyParser = require("body-parser");
 
 var fs=require('fs');
 
+var app1=require('./app1');
 
 const PORT=5000;
 
@@ -24,59 +24,6 @@ app.get('/',function(req,res){
 app.get('/info',function(req,res){
     res.sendfile("README.md");
 })
-
-
-const nome='happy ending';
-app.get('/beer/happyending',function(req,res){
-    request({
-        url:'https://sandbox-api.brewerydb.com/v2/beers?name='+nome+'&key='+process.env.BREW_KEY,
-        method: 'GET',
-    },function(error, response, body){
-        if(error) {
-            console.log(error);
-        } else {
-            var info=JSON.parse(body);
-            res.send(info);
-            //res.send(info.data.style.description);
-            //res.send(response.statusCode+" "+body)
-            console.log(response.statusCode +" OK");
-        }
-    });
-});
-
-app.get('/beer',function(req,res){
-    request({
-        url:'https://sandbox-api.brewerydb.com/v2/beer/random/?key='+ process.env.BREW_KEY,
-        method: 'GET',
-    },function(error, response, body){
-        if(error) {
-            console.log(error);
-        } else {
-            var info=JSON.parse(body);
-            res.send(info);
-            //res.send(info.data.style.description);
-            //res.send(response.statusCode+" "+body)
-            console.log(response.statusCode +" OK");
-        }
-    });
-});
-
-var id;app.get('/city_id/:citta',function(req,res){
-    request({
-        url:'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key='+process.env.GOOGLE_KEY +'&input='+req.params.citta+'&inputtype=textquery',
-        method: 'GET',
-    },function(error, response, body){
-        if(error) {
-            console.log(error);
-        } else {
-            var info=JSON.parse(body);
-            res.send(info.candidates);
-            //res.send(info.data.style.description);
-            //res.send(response.statusCode+" "+body)
-            console.log(response.statusCode +" OK");
-   }
-    });
-});
 
 app.get('/attrazioni/:citta',function(req,res){
     request({
@@ -101,31 +48,6 @@ app.get('/attrazioni/:citta',function(req,res){
     });
 });
 
-
-app.get('/ristoranti/',function(req,res){
-    request({
-        url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=ristoranti+a+'+req.query.citta+'&language=it',
-        method: 'GET',
-    },function(error, response, body){
-        if(error) {
-            console.log(error);
-        } else {
-            var info=JSON.parse(body);
-            var ristoranti='<h1>Ristoranti:</h1><br>';
-            for(var i=0; i<info.results.length; i++){
-                ristoranti+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
-            }
-            res.send(ristoranti);
-            //res.send(info);
-
-            //res.send(info.data.style.description);
-            //res.send(response.statusCode+" "+body)
-            console.log(response.statusCode +" OK");
-   }
-    });
-});
-
-
 app.get('/pizzerie/:citta',function(req,res){
     request({
         url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query=pizzerie+a+'+req.params.citta+'&language=it',
@@ -135,20 +57,87 @@ app.get('/pizzerie/:citta',function(req,res){
             console.log(error);
         } else {
             var info=JSON.parse(body);
+            var coord=[];
             var pizzerie='<h1>Pizzerie:</h1><br>';
-            for(var i=0; i<info.results.length; i++){
-                pizzerie+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
-            }
-            var emma1 = {lat: info.results[0].geometry.location.lat, lng: info.results[0].geometry.location.lng};
+            var tot=info.results.length;
 
-            res.send(pizzerie);
-            
-            //res.send(info);
+            for(var i=0; i<tot; i++){
+                pizzerie+='<h4>'+info.results[i].name+'</h4>'+' in '+info.results[i].formatted_address+'<br>';
+                coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
+            }
+
+            //res.send(pizzerie);
+            res.send(info);
 
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
             console.log(response.statusCode +" OK");
    }
+    });
+});
+
+app.get('/:luoghi/:citta',function(req,res){
+    request({
+        //url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query='+req.params.luoghi+'a+'+req.params.citta+'&language=it',
+        url:'https://maps.googleapis.com/maps/api/place/textsearch/json?key='+process.env.GOOGLE_KEY+'&query='+req.query.luoghi+'a+'+req.query.citta+'&language=it',
+        method: 'GET',
+    },function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            var info=JSON.parse(body);
+            if(info.results.length==0){
+                var errore="<h1> Nessun risultato ottenuto</h1>";
+                res.send(errore);
+            }
+            else{
+            var luogo=req.query.luoghi.toUpperCase();
+            var citta=req.query.citta.toUpperCase();
+            var coord=[];
+            var attrazioni='<h1>'+ luogo +' a '+ citta +'</h1>';
+            for(var i=0; i<info.results.length; i++){
+                attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
+                coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
+            }
+
+            attrazioni+=`<!DOCTYPE html>
+            <html>
+              <head>
+                <style>
+                  /* Set the size of the div element that contains the map */
+                  #map {
+                    height: 400px;  /* The height is 400 pixels */
+                    width: 100%;  /* The width is the width of the web page */
+                   }
+                </style>
+              </head>
+              <body>
+                <h3>Google Maps</h3>
+                <div id="map"></div>
+                <script>
+                function initMap() {
+                    //var emma = {lat: 41.894798, lng: 12.4751301};
+                    var first={lat: ${coord[0].lat}, lng: ${coord[0].lng}};
+    
+                    var map = new google.maps.Map(document.getElementById('map'), {zoom: 10, center: first});
+    
+                    var marker = [];
+                    for(var i=0;i<10;i++){
+                        //marker[i]=new google.maps.Marker({position: {lat: coord[i].lat, lng: coord[i].lng} , map:map});
+                    }
+                  }
+                </script>
+                <script defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&callback=initMap">
+                </script>
+              </body>
+            </html>`;
+
+            res.send(attrazioni);
+            //res.send(info);
+            console.log(response.statusCode +" OK");
+        }
+    }
     });
 });
 

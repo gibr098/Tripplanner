@@ -6,13 +6,16 @@
 <body>
   <div>
 
-<h1> Scegli una Città </h1>
+<h1> Cerca luoghi di interesse per la tua meta</h1>
 
-<form action="http://localhost:5000/ristoranti" method="GET">
+<form action="http://localhost:5000/:luoghi/:citta" method="GET">
   Città:<br>
   <input type="text" name="citta">
-  <br>
-  <input type="submit" value="Ristoranti">
+  <br><br>
+  Luoghi di interesse: (Ristoranti, Hotel, Cinema...)<br>
+  <input type="text" name="luoghi">
+  <br><br>
+  <input type="submit" value="Cerca">
 
 </form>
 </div>
