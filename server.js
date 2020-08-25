@@ -123,7 +123,7 @@ app.get('/:luoghi/:citta',function(req,res){
                   }
                 </script>
                 <script defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&callback=initMap">
+                src="https://maps.googleapis.com/maps/api/js?key=`+process.env.GOOGLE_KEY+`+&callback=initMap">
                 </script>
               </body>
             </html>`;
