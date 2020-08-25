@@ -55,6 +55,10 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 app.get('/', function(req,res){
 	res.sendFile(__dirname + "/" + "home.html");
 })
+
+app.get('/addeventnew', function(req,res){
+	res.sendFile(__dirname + "/" + "addeventform.html");
+})
 app.get('/testauth', function(req,res){
 	var auth= req.isAuthenticated();
 	res.send("L'autenticazione è : " + auth);
@@ -69,6 +73,9 @@ app.get('/logout', function(req, res) {
 });
 var calendar= require('./calendar');
 app.use('/addevent',calendar);
+
+var addeventform= require('./addeventform');
+app.use('/addeventform',addeventform);
 
 app.get('/existstoken', function(req,res){
 	fs.stat('currentToken.txt', function(err, stat) {
