@@ -1,4 +1,3 @@
-
 const express=require('express');
 const app=express();
 //app.use(bodyParser.urlencoded({ extended: false }));
@@ -8,10 +7,6 @@ var request = require('request');
 const dotenv = require("dotenv").config();
 
 var bodyParser = require("body-parser");
-
-var fs=require('fs');
-
-var app1=require('./app1');
 
 const PORT=5000;
 
@@ -96,8 +91,8 @@ app.get('/:luoghi/:citta',function(req,res){
             var coord=[];
             var attrazioni='<h1>'+ luogo +' a '+ citta +'</h1>';
             for(var i=0; i<info.results.length; i++){
-                attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
                 coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
+                attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
             }
 
             attrazioni+=`<!DOCTYPE html>

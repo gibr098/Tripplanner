@@ -1,1 +1,12 @@
-npm install path-exists fs path express request passport body-parser express-session readline googleapis request app-root-path passport-google-oauth20
+npm install path-exists 
+npm install fs 
+npm install path 
+npm install express 
+npm install request 
+npm install passport 
+npm install body-parser 
+npm install express-session 
+npm install readline 
+npm install googleapis 
+npm install app-root-path 
+npm install passport-google-oauth20
