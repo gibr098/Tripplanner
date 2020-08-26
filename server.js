@@ -8,11 +8,19 @@ const dotenv = require("dotenv").config();
 
 var bodyParser = require("body-parser");
 
+var fs=require('fs');
+
 const PORT=5000;
+
+var send=require('./send');
+var receive=require('./receive');
+const { fstat } = require('fs');
+
 
 
 app.get('/',function(req,res){
-    res.send("Benvenuto, per iniziare vai su /start");
+    const msg="<h3>Benvenuto, per iniziare vai su <a href='http://localhost:5000/start'>/start</a></h3>"
+    res.send(msg);
 })
 
 app.get('/start',function(req,res){
@@ -21,6 +29,19 @@ app.get('/start',function(req,res){
 
 app.get('/info',function(req,res){
     res.sendfile("README.md");
+})
+
+
+app.get('/cronologia',function(req,res){
+    receive.ricevi();
+    res.sendFile('./cronologia.html',{root:__dirname});
+})
+
+app.get('/cancella-cronologia',function(req,res){
+    fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function(err){
+        if (err) return console.log(err);
+    })
+    res.send('Cronologia Cancellata');
 })
 
 app.get('/attrazioni/:citta',function(req,res){
@@ -105,6 +126,8 @@ app.get('/:luoghi/:citta',function(req,res){
 
             var j=0;
 
+            send.invia(attrazioni);
+
             attrazioni+=`<!DOCTYPE html>
             <html>
               <head>
@@ -138,6 +161,8 @@ app.get('/:luoghi/:citta',function(req,res){
               </body>
             </html>`;
 
+            
+
             //res.send(coord);
             res.send(attrazioni);
             //res.send(info);
@@ -152,3 +177,4 @@ app.get('/:luoghi/:citta',function(req,res){
 app.listen(PORT,function(){
     console.log("Server in ascolto sulla porta: %s",PORT);
 });
+
