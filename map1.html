@@ -21,19 +21,47 @@
     <!--<script type="text/javascript" src="./app1.js"></script>-->
     <script>
       function initMap() {
-          //var emma = {lat: 41.894798, lng: 12.4751301};
-          var first={lat: coord[0].lat, lng: coord[0].lng};
+    var emma = {lat: 41.894798, lng: 12.4751301};
 
-          var map = new google.maps.Map(document.getElementById('map'), {zoom: ciao, center: first});
-          var m=new google.maps.Marker({position: first, map:map});
+    var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: emma});
+    //var e=new google.maps.Marker({position:emma, map:map});
 
-          var marker = [];
-          for(var i=0;i<tot;i++){
-             //marker[i]=new google.maps.Marker({position: {lat: coord[i].lat, lng: coord[i].lng} , map:map});
-          }
+    var prova=[0,1,2,3,5,6];
+    var c=[{lat: 42,lng: 12},{lat: 43,lng: 11},{lat: 44,lng: 10}];
+    var peride=[
+  { lat: 41.9264087, lng: 12.5147292 },
+  { lat: 41.9113053, lng: 12.4873827 },
+  { lat: 41.8921074, lng: 12.4684954 },
+  { lat: 41.9059427, lng: 12.4698104 },
+  { lat: 41.9029219, lng: 12.4789649 },
+  { lat: 41.9013955, lng: 12.4918816 },
+  { lat: 41.9713889, lng: 12.5408333 },
+  { lat: 41.9499082, lng: 12.4655947 },
+  { lat: 41.9085591, lng: 12.4685986 },
+  { lat: 41.8970729, lng: 12.5152471 },
+  { lat: 41.9116367, lng: 12.4877501 },
+  { lat: 41.8952634, lng: 12.4726677 },
+  { lat: 41.958447, lng: 12.399666 },
+  { lat: 41.8841667, lng: 12.4727778 },
+  { lat: 41.90205330000001, lng: 12.4962989 },
+  { lat: 41.9118284, lng: 12.4983522 },
+  { lat: 41.8534209, lng: 12.4793 },
+  { lat: 41.900455, lng: 12.427412 },
+  { lat: 41.9129295, lng: 12.4182548 },
+  { lat: 41.9385071, lng: 12.5350357 }
+];
 
-        }
-      </script>
+
+    var marker = [];
+
+    for(var i=0;i<10;i++){
+        //marker[i]=new google.maps.Marker({position:{lat:41.8+i, lng:12.4+i}, map:map});
+    }
+    //prova.forEach((x,i) =>  new google.maps.Marker({position: {lat: 42+x, lng: 11+x} , map:map}));
+    peride.forEach((x,i) =>  new google.maps.Marker({position: {lat: x.lat, lng: x.lng} , map:map}));
+  
+  }
+    </script>
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&callback=initMap">
     </script>
