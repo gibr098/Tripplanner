@@ -116,11 +116,11 @@ app.get('/:luoghi/:citta',function(req,res){
             else{
             var luogo=req.query.luoghi.toUpperCase();
             var citta=req.query.citta.toUpperCase();
-            //var coord=[];
+            var coord=[];
             var tot=info.results.length;
             var attrazioni='<h1>'+ luogo +' a '+ citta +'</h1>';
             for(var i=0; i<tot; i++){
-                var coord= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
+                coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
                 attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
             }
 
@@ -145,13 +145,13 @@ app.get('/:luoghi/:citta',function(req,res){
                 <script>
                 function initMap() {
                     //var emma = {lat: 41.894798, lng: 12.4751301};
-                    var first={lat: ${coord.lat}, lng: ${coord.lng}};
+                    var first={lat: ${coord[0].lat}, lng: ${coord[0].lng}};
 
                     var map = new google.maps.Map(document.getElementById('map'), {zoom: 10, center: first});
                     
                     var marker = [];
                     for(var i=0;i<tot;i++){
-                       marker[i]=new google.maps.Marker({position: {lat: ${coord.lat}, lng: ${coord.lng}} , map:map});
+                       //marker[i]=new google.maps.Marker({position: {lat: , lng:  , map:map});
                     }
                 }
                 </script>
