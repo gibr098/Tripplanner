@@ -11,9 +11,12 @@ var bodyParser = require("body-parser");
 const PORT=5000;
 
 
-
 app.get('/',function(req,res){
-    res.send("Benvenuto");
+    res.send("Benvenuto, per iniziare vai su /start");
+})
+
+app.get('/start',function(req,res){
+    res.sendFile('./form.html',{root:__dirname});
 })
 
 app.get('/info',function(req,res){
@@ -61,8 +64,12 @@ app.get('/pizzerie/:citta',function(req,res){
                 coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
             }
 
+            pizzerie+=``;
+      
+
             //res.send(pizzerie);
             res.send(info);
+            //res.sendFile('./map1.html',{root:__dirname});
 
             //res.send(info.data.style.description);
             //res.send(response.statusCode+" "+body)
@@ -88,12 +95,15 @@ app.get('/:luoghi/:citta',function(req,res){
             else{
             var luogo=req.query.luoghi.toUpperCase();
             var citta=req.query.citta.toUpperCase();
-            var coord=[];
+            //var coord=[];
+            var tot=info.results.length;
             var attrazioni='<h1>'+ luogo +' a '+ citta +'</h1>';
-            for(var i=0; i<info.results.length; i++){
-                coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
+            for(var i=0; i<tot; i++){
+                var coord= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
                 attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
             }
+
+            var j=0;
 
             attrazioni+=`<!DOCTYPE html>
             <html>
@@ -112,15 +122,15 @@ app.get('/:luoghi/:citta',function(req,res){
                 <script>
                 function initMap() {
                     //var emma = {lat: 41.894798, lng: 12.4751301};
-                    var first={lat: ${coord[0].lat}, lng: ${coord[0].lng}};
-    
+                    var first={lat: ${coord.lat}, lng: ${coord.lng}};
+
                     var map = new google.maps.Map(document.getElementById('map'), {zoom: 10, center: first});
-    
+                    
                     var marker = [];
-                    for(var i=0;i<10;i++){
-                        //marker[i]=new google.maps.Marker({position: {lat: coord[i].lat, lng: coord[i].lng} , map:map});
+                    for(var i=0;i<tot;i++){
+                       marker[i]=new google.maps.Marker({position: {lat: ${coord.lat}, lng: ${coord.lng}} , map:map});
                     }
-                  }
+                }
                 </script>
                 <script defer
                 src="https://maps.googleapis.com/maps/api/js?key=`+process.env.GOOGLE_KEY+`+&callback=initMap">
@@ -128,6 +138,7 @@ app.get('/:luoghi/:citta',function(req,res){
               </body>
             </html>`;
 
+            //res.send(coord);
             res.send(attrazioni);
             //res.send(info);
             console.log(response.statusCode +" OK");

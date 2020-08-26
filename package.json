@@ -17,6 +17,8 @@
   },
   "homepage": "https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori#readme",
   "dependencies": {
+    "amqp": "^0.2.7",
+    "amqplib": "^0.6.0",
     "app-root-path": "^3.0.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",

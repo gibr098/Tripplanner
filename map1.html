@@ -18,7 +18,22 @@
     * The key parameter will contain your own API key (which is not needed for this tutorial)
     * The callback parameter executes the initMap() function
     -->
-    <script type="text/javascript" src="./app1.js"></script>
+    <!--<script type="text/javascript" src="./app1.js"></script>-->
+    <script>
+      function initMap() {
+          //var emma = {lat: 41.894798, lng: 12.4751301};
+          var first={lat: coord[0].lat, lng: coord[0].lng};
+
+          var map = new google.maps.Map(document.getElementById('map'), {zoom: ciao, center: first});
+          var m=new google.maps.Marker({position: first, map:map});
+
+          var marker = [];
+          for(var i=0;i<tot;i++){
+             //marker[i]=new google.maps.Marker({position: {lat: coord[i].lat, lng: coord[i].lng} , map:map});
+          }
+
+        }
+      </script>
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfoU_FqP-lC5nKYNR2qzNDynKs1TI3NuA&callback=initMap">
     </script>
