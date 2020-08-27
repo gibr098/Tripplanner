@@ -19,7 +19,7 @@ amqp.connect('amqp://localhost', function(error0, connection) {
             durable: false
         });
 
-        console.log(" Attendo Messaggio. To exit press CTRL+C", queue);
+        console.log(" Attendo Messaggio", queue);
 
         channel.consume(queue, function(msg) {
             ris=msg.content.toString();

@@ -108,7 +108,6 @@ app.get('/pizzerie/:citta',function(req,res){
             }
 
             pizzerie+=``;
-      
 
             //res.send(pizzerie);
             res.send(coord);
@@ -157,7 +156,7 @@ app.get('/:luoghi/:citta',function(req,res){
             <html>
               <head>
                 <style>
-                   /* Set the size of the div element that contains the map */
+                   /* Dimensioni del div che contiene la mappa */
                   #map {
                     height: 400px;  /* The height is 400 pixels */
                     width: 100%;  /* The width is the width of the web page */
@@ -165,15 +164,18 @@ app.get('/:luoghi/:citta',function(req,res){
                 </style>
               </head>
               <body>
-                <h3>My Google Maps Demo</h3>
-                <!--The div element for the map -->
+                <h3>Google Maps</h3>
+                
                 <div id="map"></div>
+
                 <!--Load the API from the specified URL
                 * The async attribute allows the browser to render the page while the API loads
                 * The key parameter will contain your own API key (which is not needed for this tutorial)
                 * The callback parameter executes the initMap() function
                 -->
+
                 <!--<script type="text/javascript" src="./app1.js"></script>-->
+
                 <script>
                   function initMap() {
                 //var emma = {lat: 41.894798, lng: 12.4751301};
@@ -182,7 +184,7 @@ app.get('/:luoghi/:citta',function(req,res){
                 var map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: first});
                 //var m=new google.maps.Marker({position:first, map:map});
 
-                var prova= [0,1,2,3];
+                //var prova= [0,1,2,3];
 
                 var marker = [];
 
@@ -197,7 +199,6 @@ app.get('/:luoghi/:citta',function(req,res){
                 </script>
               </body>
             </html>`;
-
 
             //res.send(coord);
             res.send(attrazioni);
@@ -287,9 +288,9 @@ app.get('/existstoken', function(req,res){
 })
 
 
-
-
 app.listen(PORT,function(){
     console.log("Server in ascolto sulla porta: %s",PORT);
+    console.log("Ctrl+c per terminare");
 });
+
 
