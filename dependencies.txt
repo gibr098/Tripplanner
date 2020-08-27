@@ -11,3 +11,4 @@ npm install googleapis
 npm install app-root-path 
 npm install passport-google-oauth20
 npm install amqplib
+npm install swagger-ui-express

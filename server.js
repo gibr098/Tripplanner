@@ -19,6 +19,9 @@ var bodyParser = require("body-parser");
 
 var fs=require('fs');
 
+const swaggerUi=require('swagger-ui-express');
+const swaggerDocument=require('./swagger.json')
+
 const PORT=9999;
 
 var send=require('./send');
@@ -29,10 +32,11 @@ fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function(err){
     if (err) return console.log(err);
 })
 
-
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
 
 app.get('/',function(req,res){
-    const msg="<h3>Benvenuto, per iniziare vai su <a href='http://localhost:9999/start'>/start</a></h3>"
+    const msg="<h3>Benvenuto, per iniziare vai su <a href='http://localhost:9999/start'>/start</a></h3><br>"+
+    "<h3>Per la Documentazione <a href='http://localhost:9999/api-docs'>/api-docs</a></h3>";
     res.send(msg);
 })
 
