@@ -28,6 +28,11 @@ var send=require('./send');
 var receive=require('./receive');
 const { fstat } = require('fs');
 
+const open = require('open');
+(async () => {
+    await open('http://localhost:9999/');
+})();
+
 fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function(err){
     if (err) return console.log(err);
 })
