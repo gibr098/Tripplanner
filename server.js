@@ -111,7 +111,7 @@ app.get('/pizzerie/:citta',function(req,res){
       
 
             //res.send(pizzerie);
-            res.send(info);
+            res.send(coord);
             //res.sendFile('./map1.html',{root:__dirname});
 
             //res.send(info.data.style.description);
@@ -145,11 +145,10 @@ app.get('/:luoghi/:citta',function(req,res){
                 coord[i]= {lat: info.results[i].geometry.location.lat, lng: info.results[i].geometry.location.lng};
                 attrazioni+='<b>'+info.results[i].name+'</b>'+' in '+info.results[i].formatted_address+'</br>';
             }
-            
+
             var prova=[0,1,2,4];
             //coord.forEach((x,i) =>console.log('indice: ',i,x));
             //console.log(coord);
-            
 
             send.invia(attrazioni);
 
