@@ -33,6 +33,8 @@ const open = require('open');
     await open('http://localhost:9999/');
 })();
 
+receive.ricevi();
+
 fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function(err){
     if (err) return console.log(err);
 })
@@ -55,7 +57,7 @@ app.get('/info',function(req,res){
 
 
 app.get('/cronologia',function(req,res){
-    receive.ricevi();
+    //receive.ricevi();
     res.sendFile('./cronologia.html',{root:__dirname});
 })
 
