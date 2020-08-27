@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 
-var homebutton = '<form action="http://localhost:9999/"> <input type="submit" value="Torna alla home" /> </form>';
+var homebutton = '<form action="http://localhost:9999/home"> <input type="submit" value="Torna alla home" /> </form>';
 
 var token = manageTokenOauth.readToken("currentToken");
 function aggiungiEvento(accessToken, req, res,citta,tipo,posto, datainizio,datafine) {
