@@ -1,4 +1,4 @@
-var server=require('./server')
+var server=require('../server')
 
  //Initialize and add the map
 function initMap() {
@@ -8,6 +8,7 @@ function initMap() {
     //var e=new google.maps.Marker({position:emma, map:map});
 
     var prova=[0,1,2,3,5,6];
+    var c=server.coord;
 
     var marker = [];
 

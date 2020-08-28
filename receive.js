@@ -2,7 +2,10 @@
 
 var amqp = require('amqplib/callback_api');
 var fs=require('fs');
+var db=require('./database')
+var session_id=Math.random();
 
+module.exports.session_id=session_id;
 function ricevi(){
 amqp.connect('amqp://localhost', function(error0, connection) {
     if (error0) {
@@ -24,9 +27,12 @@ amqp.connect('amqp://localhost', function(error0, connection) {
         channel.consume(queue, function(msg) {
             ris=msg.content.toString();
             console.log("Messaggio ricevuto");
+            /*
             fs.appendFile('./cronologia.html', ris, function(err){
                 if (err) return console.log(err);
             })
+            */
+           db.salva(session_id,ris)
 
         }, {
             noAck: true

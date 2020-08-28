@@ -1,6 +1,6 @@
 const { Pool, Client } = require('pg')
 
-function salva(citta, nome, via) {
+function salva(id,msg) {
 
     const pool = new Pool({
         user: 'postgres',
@@ -15,7 +15,7 @@ function salva(citta, nome, via) {
     })
     pool.connect((err, client, done) => {
         if (err) throw err
-        client.query('insert into preferiti values($1,$2,$3)', [citta, nome, via], (err, res) => {
+        client.query('insert into cronologia values($1,$2)', [id,msg], (err, res) => {
             done()
             if (err) {
                 console.log(err.stack)
@@ -26,16 +26,8 @@ function salva(citta, nome, via) {
     })
 }
 
-function stampaPreferiti() {
-    
-}
-
-module.exports.salva = salva;
-module.exports.stampaPreferiti = stampaPreferiti;
-
-/*
-const { Pool, Client } = require('pg')
-app.get('/preferiti', function (req, result) {
+function stampaCronologia(id){
+    var testo='CRONOLOGIA ';
     const pool = new Pool({
         user: 'postgres',
         host: 'localhost',
@@ -55,16 +47,19 @@ app.get('/preferiti', function (req, result) {
         port: 5432,
     })
     client.connect()
-    client.query('SELECT * from Preferiti', (err, res) => {
-        var ris=' ';
-        
-        for (var i = 0; i < res.rows.length; i++) {
-            ris +='<b>' + res.rows[i].citta + '</b></br>' + ' '+res.rows[i].nome + ' in '+'<u>'+res.rows[i].via +'</u></br></br>';
+    client.query('SELECT * from Cronologia where id=$1',[id], (err, res) => {
+        for(var i=0;i<res.rows.length;i++){
+            testo+=res.rows[i].testo;
         }
-        result.send(ris);
-        console.log(err, res)
+        console.log(err, testo)
         client.end()
-    })
-});
-*/
+    });
+}
+
+module.exports.salva = salva;
+module.exports.stampaCronologia = stampaCronologia;
+
+
+
+
 
