@@ -33,7 +33,7 @@ function stampaPreferiti() {
 module.exports.salva = salva;
 module.exports.stampaPreferiti = stampaPreferiti;
 
-
+/*
 const { Pool, Client } = require('pg')
 app.get('/preferiti', function (req, result) {
     const pool = new Pool({
@@ -66,5 +66,5 @@ app.get('/preferiti', function (req, result) {
         client.end()
     })
 });
-
+*/
 

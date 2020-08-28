@@ -43,8 +43,8 @@
         }
       }
     },
-    "/api/google/addevent" : {
-      "post" : {
+    "/api/addevent" : {
+      "get" : {
         "summary" : "Aggiunge un evento a google calendar",
         "parameters" : [ {
           "name" : "token",
@@ -84,26 +84,6 @@
           "name" : "datafine",
           "in": "query",
           "description" : "Data fine del viaggio",
-          "required" : true,
-          "type" : "string"
-        }],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          },
-          "401" : {
-            "description" : "UNAUTHORIZED"
-          }
-        }
-      }
-    },
-     "/api/google/getevents" : {
-      "get" : {
-        "summary" : "Restituisce gli eventi creati dall'app su google calendar",
-        "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "token per l'accesso a oauth",
           "required" : true,
           "type" : "string"
         }],
