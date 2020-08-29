@@ -1,0 +1,39 @@
+{
+  "name": "progetto-reti-di-calcolatori",
+  "version": "1.0.0",
+  "description": "CIAOOOOOO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori/issues"
+  },
+  "homepage": "https://gitlab.com/sirico.1810153/progetto-reti-di-calcolatori#readme",
+  "dependencies": {
+    "amqp": "^0.2.7",
+    "amqplib": "^0.6.0",
+    "app-root-path": "^3.0.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "googleapis": "^59.0.0",
+    "import-scripts": "^1.0.0",
+    "open": "^7.2.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
+    "path-exists": "^4.0.0",
+    "readline": "^1.3.0",
+    "request": "^2.88.2",
+    "swagger-ui-express": "^4.1.4"
+  }
+}
