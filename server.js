@@ -57,7 +57,7 @@ app.get('/start', function (req, res) {
 })
 
 app.get('/info', function (req, res) {
-    res.sendfile("README.md");
+    res.sendFile("README.md", { root: __dirname });
 })
 
 app.get('/cronologia', function (req, result) {

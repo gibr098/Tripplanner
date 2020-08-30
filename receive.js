@@ -5,7 +5,6 @@ var fs=require('fs');
 var db=require('./database')
 var session_id=Math.random();
 
-module.exports.session_id=session_id;
 function ricevi(){
 amqp.connect('amqp://localhost', function(error0, connection) {
     if (error0) {
@@ -43,3 +42,4 @@ amqp.connect('amqp://localhost', function(error0, connection) {
 }
 
 module.exports.ricevi=ricevi;
+module.exports.session_id=session_id;
