@@ -42,14 +42,10 @@ return new Promise(function(resolve, reject) {
 const arraytostring = (array) =>{
     return new Promise(function(resolve, reject) { 
             if(array.length==0){
-                resolve ("Non ci sono eventi da mostrare" + backbutton);
-                console.log("Sono qui");}
+                resolve ("Non ci sono eventi da mostrare" + backbutton);}
             else{
-                console.log("Adesso sono qui");
-            resolve(JSON.stringify(array) + delbutton + backbutton);
-            }
-            
-        
+            resolve(array + delbutton + backbutton);
+            }        
     }); }
 
     const downloadevents = (accessToken) =>{
@@ -66,20 +62,6 @@ const arraytostring = (array) =>{
                 if (!err && res.statusCode == HTTP_OK) {
                     var info = JSON.parse(body);
                     l = info.items;
-                    if (l != null) {
-                        console.log("Trovati eventi in l");
-                        fs.writeFile('./events.html', 'Eventi programmati <br>', function(err){
-                            if (err) return console.log(err);
-                        })
-                   
-                    }
-        
-                    if(l==null) { 
-                        console.log("l è vuoto non ci sono eventi");
-                        fs.writeFile('./events.html', 'Non ci sono eventi da mostrare', function(err){
-                            if (err) return console.log(err);
-                        })
-                    }
                     resolve( l ); 
                 };
             });
@@ -97,7 +79,7 @@ const addevent = (accessToken,req, res,citta,tipo,posto, datainizio,datafine) =>
 
     var body = {
         'summary': 'TRIPLANNER',
-        'description' : "Viaggio a " + citta + " Tipo Posto : " + tipo + " Locale da visitare :"+ posto,
+        'description' : "Viaggio a " + citta + " Tipo Posto: " + tipo + " Locale da visitare: "+ posto,
         'start': {
             'dateTime': '2020-08-29T09:00:00-07:00',
         },
@@ -185,11 +167,10 @@ router.get('/geteventsview', function(req,res){
         if(l!=null){
         for (var i = 0; i < l.length; i++) {
             if (l[i].summary.startsWith("TRIPLANNER"))
-            {array+=l[i].description+"    Data Inizio: "+ l[i].start.dateTime + "    Data Fine: "+ l[i].end.dateTime+"    ID Evento "+l[i].id + "<br><br>" }
+            {array+="<b>" + l[i].description+"</b>"+ "    Data Inizio: "+ l[i].start.dateTime + "    Data Fine: "+ l[i].end.dateTime+"    ID Evento "+l[i].id + "<br><br>" }
        
         };}
         return arraytostring(array);
-        //res.send(JSON.stringify(array) + delbutton +'<br><br>Cosa vuoi fare?<br>' +  backbutton + addeventbutton);
     })
     .then((ret)=>{
         res.send(ret);
