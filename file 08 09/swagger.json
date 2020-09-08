@@ -1,0 +1,151 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API per l'accesso diretto alle funzioni dell' app",
+    "version" : "1.0.0",
+    "title" : "Triplanner",
+    "contact" : {
+      "email" : "email@triplanner.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost:9999",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/luoghi/{luoghi}/citta/{citta}/" : {
+      "get" : {
+        "summary" : "Ritorna la lista dei luoghi di tipo -luogo- per una citta",
+        "parameters" : [ {
+          "name" : "luoghi",
+          "in" : "path",
+          "description" : "Tipo luogo: <br> Ristorante, hotel, cinema",
+          "required" : true,
+          "type" : "string"
+        },
+        {
+          "name" : "citta",
+          "in": "path",
+          "description" : "Citta nella quale cercare i luoghi",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/calendar/addevent" : {
+      "post" : {
+        "summary" : "Aggiunge un evento a google calendar",
+        "parameters" : [ {
+          "name" : "citta",
+          "in" : "query",
+          "description" : "Città da visitare",
+          "required" : true,
+          "type" : "string"
+        },
+        {
+          "name" : "tipoluogo",
+          "in": "query",
+          "description" : "Tipo del luogo: <br> Ristorante, Cinema, Hotel",
+          "required" : true,
+          "type" : "string"
+        },
+        {
+          "name" : "nomeluogo",
+          "in": "query",
+          "description" : "Nome del posto da visitare",
+          "required" : true,
+          "type" : "string"
+        },
+        {
+          "name" : "datainizio",
+          "in": "query",
+          "description" : "Data inizio del viaggio",
+          "required" : true,
+          "type" : "string"
+        },
+        {
+          "name" : "datafine",
+          "in": "query",
+          "description" : "Data fine del viaggio",
+          "required" : true,
+          "type" : "string"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED"
+          }
+        }
+      }
+    },
+     "/api/calendar/getevents" : {
+      "get" : {
+        "summary" : "Restituisce gli eventi creati dall'app su google calendar",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED"
+          }
+        }
+      }
+    },
+    "/api/calendar/deleteevent" : {
+      "post" : {
+        "summary" : "Cancella un evento dato l'eventID",
+        "parameters" : [ {
+          "name" : "eventID",
+          "in" : "query",
+          "description" : "ID dell'evento da cancellare",
+          "required" : true,
+          "type" : "string"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED"
+          }
+        }
+      }
+    },
+    "/api/cronologia" : {
+      "get" : {
+        "summary" : "Ritorna la cronologia delle ricerche della sessione corrente",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+          
+        }
+      }
+    },
+    "/api/cancella-cronologia" : {
+      "get" : {
+        "summary" : "Cancella la cronologia della sessione corrente",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+         
+        }
+      }
+    }
+    
+  }
+}
