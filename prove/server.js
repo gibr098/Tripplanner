@@ -27,13 +27,6 @@ const PORT = 9999;
 var send = require('./send');
 var receive = require('./receive');
 const { fstat } = require('fs');
-app.use(session({
-    secret: 'secrettexthere',
-    saveUninitialized: true,
-    resave: true,
-    // using store session on MongoDB using express-session + connect
-    
-  }));
 
 var database = require('./database');
 const { Pool, Client, Connection } = require('pg')
@@ -47,7 +40,6 @@ var session_id = receive.session_id;
 
 receive.ricevi();
 
-
 fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function (err) {
     if (err) return console.log(err);
 })
@@ -59,20 +51,13 @@ app.get('/', function (req, res) {
         "<h3>Per la Documentazione <a href='http://localhost:9999/api-docs'>/api-docs</a></h3>";
     res.send(msg);
 })
-app.get('/provaouath', function (req, res) {
-    
-    res.send(req.session.passport.user);
-})
-app.get('/notlogged', function (req, res) {
-    
-    res.sendFile('./notlogged.html', { root: __dirname });
-})
+
 app.get('/start', function (req, res) {
     res.sendFile('./form.html', { root: __dirname });
 })
 
 app.get('/info', function (req, res) {
-    res.sendfile("README.md");
+    res.sendFile("README.md", { root: __dirname });
 })
 
 app.get('/cronologia', function (req, result) {
@@ -339,14 +324,18 @@ passport.use(new GoogleStrategy({
 // La sessione dell'utente viene creata, ma se NON viene creato un campo allora l'utente non viene salvato nel database
 // questo facilita il controllo sui dati
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/', session: true }), (req, res) => {
-    console.log('You are authenticated, here is our user object:', req.user);
-    //umail = req.user.emails[0].value;
+    console.log('we authenticated, here is our user object:', req.user);
+    umail = req.user.emails[0].value;
     //res.send("Benarrivato <br> L'email dell'user è " + umail + req.isAuthenticated());
     res.sendFile(__dirname + "/" + "authcallback.html");
 });
+app.get('/home', function (req, res) {
+    res.sendFile(__dirname + "/" + "home.html");
+})
 
-
-
+app.get('/addeventnew', function (req, res) {
+    res.sendFile(__dirname + "/" + "addeventform.html");
+})
 app.get('/testauth', function (req, res) {
     var auth = req.isAuthenticated();
     res.send("L'autenticazione è : " + auth);
@@ -363,6 +352,31 @@ var calendar = require('./calendar');
 app.use('/api/calendar', calendar);
 
 
+var addeventform = require('./addeventform');
+//const { Connection, Client } = require('pg');
+app.use('/addeventform', addeventform);
+
+app.get('/existstoken', function (req, res) {
+    fs.stat('currentToken.txt', function (err, stat) {
+        if (err == null) {
+            console.log('File exists');
+            res.sendFile(__dirname + "/" + "existstokentrue.html");
+        } else if (err.code === 'ENOENT') {
+            res.sendFile(__dirname + "/" + "existstokenfalse.html");
+            console.log('File does not exists');
+
+            // file does not exist
+            //fs.writeFile('log.txt', 'Some log\n');
+        } else {
+            console.log('Some other error: ', err.code);
+        }
+    });
+
+})
+
+app.get('/notlogged', function (req, res) {
+    res.sendFile('./notlogged.html', { root: __dirname });
+})
 
 
 app.listen(PORT, function () {

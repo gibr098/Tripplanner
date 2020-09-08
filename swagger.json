@@ -3,9 +3,9 @@
   "info" : {
     "description" : "API per l'accesso diretto alle funzioni dell' app",
     "version" : "1.0.0",
-    "title" : "NomeApp API",
+    "title" : "Triplanner",
     "contact" : {
-      "email" : "email@nomeapp.com"
+      "email" : "email@triplanner.com"
     },
     "license" : {
       "name" : "Apache 2.0",
@@ -36,40 +36,31 @@
         "responses" : {
           "200" : {
             "description" : "OK"
-          },
-          "401" : {
-            "description" : "UNAUTHORIZED"
           }
         }
       }
     },
-    "/api/google/addevent" : {
+    "/api/calendar/addevent" : {
       "post" : {
         "summary" : "Aggiunge un evento a google calendar",
         "parameters" : [ {
-          "name" : "token",
-          "in" : "query",
-          "description" : "token per l'accesso a oauth",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "citta",
           "in" : "query",
-          "description" : "La città da visitare",
+          "description" : "Città da visitare",
           "required" : true,
           "type" : "string"
         },
         {
           "name" : "tipoluogo",
           "in": "query",
-          "description" : "Tipo del luogo: <br> Ristorante, cinema, Hotel",
+          "description" : "Tipo del luogo: <br> Ristorante, Cinema, Hotel",
           "required" : true,
           "type" : "string"
         },
         {
           "name" : "nomeluogo",
           "in": "query",
-          "description" : "Nome del luogo da visitare",
+          "description" : "Nome del posto da visitare",
           "required" : true,
           "type" : "string"
         },
@@ -97,13 +88,27 @@
         }
       }
     },
-     "/api/google/getevents" : {
+     "/api/calendar/getevents" : {
       "get" : {
         "summary" : "Restituisce gli eventi creati dall'app su google calendar",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED"
+          }
+        }
+      }
+    },
+    "/api/calendar/deleteevent" : {
+      "post" : {
+        "summary" : "Cancella un evento dato l'eventID",
         "parameters" : [ {
-          "name" : "token",
+          "name" : "eventID",
           "in" : "query",
-          "description" : "token per l'accesso a oauth",
+          "description" : "ID dell'evento da cancellare",
           "required" : true,
           "type" : "string"
         }],
