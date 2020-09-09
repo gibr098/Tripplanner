@@ -21,3 +21,6 @@ Nella sezione 'Programma con calendar' è possibile programmare il proprio viagg
 La funzione di cronologia invece permette all'utente di rivedere tutte le ricerche che ha compiuto e eventualmente di cancellarle.
 
 
+Requisiti necessari:
+- Per la corretta esecuzione del server è necessario installare tutte le dipendenze, che si possono trovare in dependencies.txt
+
