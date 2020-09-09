@@ -328,10 +328,11 @@ passport.use(new GoogleStrategy({
     scope: ['email', 'https://www.googleapis.com/auth/calendar'],
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:', profile);
-
+    var ema = profile.emails[0].value;
+    console.log('USEREMAIL: ' +profile.emails[0].value);
     // Salviamo il token su un file chiamato currentToken
     // lo stesso file verrà distrutto al momento del logout
-    manageTokenOauth.createToken("currentToken", accessToken);
+    manageTokenOauth.createToken(ema, accessToken);
 
     return cb(null, profile);
 }));
@@ -354,7 +355,7 @@ app.get('/testauth', function (req, res) {
 
 
 app.get('/logout', function (req, res) {
-    manageTokenOauth.deleteToken("currentToken");
+    manageTokenOauth.deleteToken(req.user.emails[0].value);
     req.logout();
     res.sendFile(__dirname + "/" + "logout.html");
 

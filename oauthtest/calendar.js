@@ -10,6 +10,10 @@ var fs=require('fs');
 var bodyParser = require('body-parser');
 const { TIMEOUT } = require('dns');
 const { isNullOrUndefined } = require('util');
+var url = require("url");
+//per parsare la stringa dei parametri
+var querystring = require('querystring');
+
 //const { resolve } = require('app-root-path');
 router.use( bodyParser.json() );       // to support JSON-encoded bodies
 router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -48,6 +52,15 @@ const arraytostring = (array) =>{
             }        
     }); }
 
+    const arraytostringmod = (array) =>{
+        return new Promise(function(resolve, reject) { 
+                if(array.length==0){
+                    resolve ("Non ci sono eventi da mostrare");}
+                else{
+                resolve(array);
+                }        
+        }); }
+
     const downloadevents = (accessToken) =>{
         return new Promise(function(resolve, reject) { 
     
@@ -71,20 +84,22 @@ const arraytostring = (array) =>{
         }); }
 const addevent = (accessToken,req, res,citta,tipo,posto, datainizio,datafine) =>{
         return new Promise(function(resolve, reject) { 
+            var ret='200';
             var url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
     var headers = {
         'Authorization': 'Bearer ' + accessToken,
         'Content-Type': 'application/json'
     };
+    console.log(datainizio);
 
     var body = {
         'summary': 'TRIPLANNER',
         'description' : "Viaggio a " + citta + " Tipo Posto: " + tipo + " Locale da visitare: "+ posto,
         'start': {
-            'dateTime': '2020-08-29T09:00:00-07:00',
+            'dateTime': datainizio,
         },
         'end': {
-            'dateTime': '2020-08-29T17:00:00-07:00',
+            'dateTime': datafine,
         },
         'visibility': 'public'
     };
@@ -97,16 +112,17 @@ const addevent = (accessToken,req, res,citta,tipo,posto, datainizio,datafine) =>
         },
         function callback(err, res, body) {
             console.log(body);
-            if(err) console.log(err);
+            if(err) {console.log(err);
+            ret='401';}
             else console.log("Aggiunto Evento");
         }
     );
-resolve('OK');                
+resolve(ret);                
     }); }
 
 const deleteevent = (accessToken, eventID) =>{
         return new Promise(function(resolve, reject) { 
-            var ret = 'OK';
+            var ret = '200';
             var url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events/'+eventID;
             var headers = {
                 'Authorization': 'Bearer ' + accessToken,
@@ -121,7 +137,8 @@ const deleteevent = (accessToken, eventID) =>{
                 },
                 function callback(err, res, body) {
                     console.log(body);
-                    if(err) console.log(err);
+                    if(err) {console.log(err);
+                    ret='401';}
                     else console.log("Evento Cancellato");
                 }
                 
@@ -196,12 +213,14 @@ router.post('/deleteeventview', function(req,res){
 })
 
 // servizi api
-router.post('/addevent', function(req,res){
-    var citta=req.body.citta;
-    var tipo=req.body.tipo;
-    var posto= req.body.posto;
-    datainizio = req.body.start+"T09:00:00-07:00";
-    datafine = req.body.end + "T09:00:00-07:00";    
+router.post('/addevents', function(req,res){
+    var params = querystring.parse(url.parse(req.url).query);
+    var citta=params["citta"];
+    var tipo=params["tipo"];
+    var posto= params["posto"];
+    datainizio = params["start"]+"T09:00:00-07:00";
+    datafine = params["end"] + "T09:00:00-07:00";    
+    console.log(JSON.stringify(params));
         gettoken().then((token)=>{
             console.log(token);
             
@@ -214,35 +233,42 @@ router.post('/addevent', function(req,res){
         .catch((err)=>{console.log('errore:', err)})
     })
 
+
 router.get('/getevents', function(req,res){
-        gettoken().then((token)=>{
-        console.log(token);
-        
-        return downloadevents(token);
-        
-    }).then((l)=>{
-        var array = new String();
-        if(l!=null){
-        for (var i = 0; i < l.length; i++) {
-            if (l[i].summary.startsWith("TRIPLANNER"))
-            {array+=l[i];}
-        
-        };}
-        res.send(JSON.stringify(array));
-    })
-    .catch((err)=> {
-        console.log('errore : ' ,err );
-    })
+    gettoken().then((token)=>{
+    console.log(token);
     
+    return downloadevents(token);
+    
+}).then((l)=>{
+    var cont=0;
+    var array = new Array();
+    if(l!=null){
+    for (var i = 0; i < l.length; i++) {
+        if (l[i].summary.startsWith("TRIPLANNER"))
+        {array[cont]=l[i];
+        cont++; }
+   
+    };}
+    return arraytostringmod(array);
+})
+.then((ret)=>{
+    res.send(JSON.stringify(ret));
+})
+.catch((err)=> {
+    console.log('errore : ' ,err );
+})
+
 })
 router.post('/deleteevent', function(req,res){
     //deleteevent viene chiamata con un metodo post
-    var eventID= req.body.eventid;
+    var params = querystring.parse(url.parse(req.url).query);
+    var eventID= params["eventID"];
     gettoken().then((token)=>{
         return deleteevent(token,eventID);
     }).then((ret)=>{
         console.log(ret);
-        res.send("ret");
+        res.send(ret);
     })
     .catch((err)=>{
         console.log('errore: ' ,err);

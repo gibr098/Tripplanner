@@ -35,9 +35,10 @@ function checkAuthentication(req,res,next){
 }
 
 
-const gettoken = () =>{
+const gettoken = (req) =>{
 return new Promise(function(resolve, reject) { 
-            resolve( manageTokenOauth.readToken("currentToken"),setTimeout(function() {
+            resolve( manageTokenOauth.readToken(req.user.emails[0].value),setTimeout(function() {
+                //console.log("email qui è:", req.user.emails[0].value);
             }, 5000) ); 
         
     
@@ -157,7 +158,7 @@ var tipo=req.body.tipo;
 var posto= req.body.posto;
 datainizio = req.body.start+"T09:00:00-07:00";
 datafine = req.body.end + "T09:00:00-07:00";    
-    gettoken().then((token)=>{
+    gettoken(req).then((token)=>{
         console.log(token);
         
         return addevent(token, req, res,citta,tipo,posto, datainizio,datafine);
@@ -174,7 +175,7 @@ router.get('/addevent', function(req,res){
 })
 
 router.get('/geteventsview', function(req,res){
-        gettoken().then((token)=>{
+        gettoken(req).then((token)=>{
         console.log(token);
         
         return downloadevents(token);
@@ -201,7 +202,7 @@ router.get('/geteventsview', function(req,res){
 router.post('/deleteeventview', function(req,res){
     //deleteevent viene chiamata con un metodo post
     var eventID= req.body.eventid;
-    gettoken().then((token)=>{
+    gettoken(req).then((token)=>{
         return deleteevent(token,eventID);
     }).then((ret)=>{
         console.log(ret);
@@ -221,7 +222,7 @@ router.post('/addevents', function(req,res){
     datainizio = params["start"]+"T09:00:00-07:00";
     datafine = params["end"] + "T09:00:00-07:00";    
     console.log(JSON.stringify(params));
-        gettoken().then((token)=>{
+        gettoken(req).then((token)=>{
             console.log(token);
             
             return addevent(token, req, res,citta,tipo,posto, datainizio,datafine);
@@ -235,7 +236,7 @@ router.post('/addevents', function(req,res){
 
 
 router.get('/getevents', function(req,res){
-    gettoken().then((token)=>{
+    gettoken(req).then((token)=>{
     console.log(token);
     
     return downloadevents(token);
@@ -264,7 +265,7 @@ router.post('/deleteevent', function(req,res){
     //deleteevent viene chiamata con un metodo post
     var params = querystring.parse(url.parse(req.url).query);
     var eventID= params["eventID"];
-    gettoken().then((token)=>{
+    gettoken(req).then((token)=>{
         return deleteevent(token,eventID);
     }).then((ret)=>{
         console.log(ret);
