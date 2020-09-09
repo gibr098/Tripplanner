@@ -13,3 +13,5 @@ npm install passport-google-oauth20
 npm install amqplib
 npm install swagger-ui-express
 npm install pg
+npm install querystring
+npm install url

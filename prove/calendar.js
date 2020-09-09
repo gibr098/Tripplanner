@@ -213,14 +213,13 @@ router.post('/deleteeventview', function(req,res){
 })
 
 // servizi api
-router.post('/addevents', function(req,res){
+router.get('/addevents', function(req,res){
     var params = querystring.parse(url.parse(req.url).query);
     var citta=params["citta"];
     var tipo=params["tipo"];
     var posto= params["posto"];
     datainizio = params["start"]+"T09:00:00-07:00";
     datafine = params["end"] + "T09:00:00-07:00";    
-    console.log(JSON.stringify(params));
         gettoken().then((token)=>{
             console.log(token);
             
@@ -260,7 +259,7 @@ router.get('/getevents', function(req,res){
 })
 
 })
-router.post('/deleteevent', function(req,res){
+router.get('/deleteevent', function(req,res){
     //deleteevent viene chiamata con un metodo post
     var params = querystring.parse(url.parse(req.url).query);
     var eventID= params["eventID"];

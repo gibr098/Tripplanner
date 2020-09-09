@@ -16,7 +16,7 @@
   "basePath" : "/",
   "schemes" : [ "http" ],
   "paths" : {
-    "/tripplanner/{luoghi}/{citta}/" : {
+    "/tripplanner/{luoghi}/{citta}" : {
       "get" : {
         "summary" : "Ritorna la lista dei luoghi di tipo -luogo- per una citta",
         "parameters" : [ {
@@ -40,7 +40,7 @@
         }
       }
     },
-    "/api/calendar/addevents" : {
+    "/api/calendar/addevent" : {
       "post" : {
         "summary" : "Aggiunge un evento a google calendar",
         "parameters" : [ {
@@ -51,28 +51,28 @@
           "type" : "string"
         },
         {
-          "name" : "tipo",
+          "name" : "tipoluogo",
           "in": "query",
           "description" : "Tipo del luogo: <br> Ristorante, Cinema, Hotel",
           "required" : true,
           "type" : "string"
         },
         {
-          "name" : "posto",
+          "name" : "nomeluogo",
           "in": "query",
           "description" : "Nome del posto da visitare",
           "required" : true,
           "type" : "string"
         },
         {
-          "name" : "start",
+          "name" : "datainizio",
           "in": "query",
           "description" : "Data inizio del viaggio",
           "required" : true,
           "type" : "string"
         },
         {
-          "name" : "end",
+          "name" : "datafine",
           "in": "query",
           "description" : "Data fine del viaggio",
           "required" : true,
@@ -104,7 +104,7 @@
     },
     "/api/calendar/deleteevent" : {
       "post" : {
-        "summary" : "Cancella un evento dato l'eventid",
+        "summary" : "Cancella un evento dato l'eventID",
         "parameters" : [ {
           "name" : "eventID",
           "in" : "query",
