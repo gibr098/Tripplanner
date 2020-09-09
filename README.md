@@ -11,6 +11,7 @@ SERVIZI UTILIZZATI:
 2- Google Maps per visualizzare la mappa della citta scelta
 3- Google Calendar (OAUTH) permette di salvare sul calendario il viaggio con città di destinazione, tipo e nome del luogo da visitare, la data di partenza e di ritorno
 4- AMQP per la gestione della cronologia.
+5- Database postgres per salvare le ricerche dell'utente
 
 Come Funziona:
 Una volta avviato server.js, si verrà reindirizzati direttamente sulla pagina iniziale dell'applicazione dalla quale è possibile accedere all' applicazione vera e propria cliccando su '/start', oppure alla documentazione raggiungibile mediante /api-docs.

@@ -45,7 +45,7 @@ const open = require('open');
 
 var session_id = receive.session_id;
 
-receive.ricevi();
+//receive.ricevi();
 
 
 /*fs.writeFile('./cronologia.html', '<h1>CRONOLOGIA</h1>', function (err) {
@@ -76,7 +76,7 @@ app.get('/info', function (req, res) {
 })
 
 app.get('/cronologia', function (req, result) {
-    //receive.ricevi();
+    receive.ricevi();
     //res.sendFile('./cronologia.html',{root:__dirname});
     var testo = 'CRONOLOGIA ' //+ session_id;
     const pool = new Pool({
