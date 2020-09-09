@@ -7,10 +7,16 @@ La programmazione di viaggi avviene mediante l'integrazione con Google Calendar,
 Il servizio fornisce inoltre un servizio di cronologia, tenendo in memoria le ricerche recenti
 
 SERVIZI UTILIZZATI:
-1- Google Places da infomazioni sul posto in cui si vuole andare
-2- Google Maps per visualizzare la mappa della citta scelta
-3- Google Calendar (OAUTH) permette di salvare sul calendario il viaggio con città di destinazione, tipo e nome del luogo da visitare, la data di partenza e di ritorno
-4- AMQP per la gestione della cronologia.
+
+1. Google Places da infomazioni sul posto in cui si vuole andare;
+2. Google Maps per visualizzare la mappa della citta scelta
+3.  Google Calendar (OAUTH) permette di salvare sul calendario il viaggio con città di destinazione, tipo e nome del luogo da visitare, la data di partenza e di ritorno
+4.  AMQP + postgreSQL per la gestione della cronologia.
+
+Requisiti necessare:
+- Per la corretta esecuzione del server è necessario installare tutte le dipendenze, che si possono trovare in dependencies.txt
+- Per il corretto funzionamento del servizio di cronologia assicurarsi di aver attivo il server del database.
+
 
 Come Funziona:
 Una volta avviato server.js, si verrà reindirizzati direttamente sulla pagina iniziale dell'applicazione dalla quale è possibile accedere all' applicazione vera e propria cliccando su '/start', oppure alla documentazione raggiungibile mediante /api-docs.
