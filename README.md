@@ -1,6 +1,6 @@
-PROGETTO RETI DI CALCOLATORI
+# Tripplanner
 
-Triplanner
+## Progetto del corso di Reti di calcolatori
 
 Triplanner è un servizio che permette di programmare un viaggio verso una città o una località delle quali vengono fornite informazioni e luoghi  di interesse.
 La programmazione di viaggi avviene mediante l'integrazione con Google Calendar, al quale il server accede grazie ad Oauth.
