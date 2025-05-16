@@ -6,6 +6,7 @@ Triplanner √® un servizio che permette di programmare un viaggio verso una citt√
 La programmazione di viaggi avviene mediante l'integrazione con Google Calendar, al quale il server accede grazie ad Oauth.
 Il servizio fornisce inoltre un servizio di cronologia, tenendo in memoria le ricerche recenti
 
+## 
 SERVIZI UTILIZZATI:
 1- Google Places da infomazioni sul posto in cui si vuole andare
 2- Google Maps per visualizzare la mappa della citta scelta
